@@ -10,7 +10,7 @@ pipeline {
 
         stage('Build Docker Image') {
             steps {
-                sh 'docker build --tag hiring-app:latest .'
+                 sh 'DOCKER_BUILDKIT=1 docker build -t hiring-app:latest .'
             }
         }
 
