@@ -10,7 +10,7 @@ pipeline {
 
         stage('Build Docker Image') {
             steps {
-                 sh 'DOCKER_BUILDKIT=1 docker build -t hiring-app:latest .'
+                 docker build -t hiring-app:${BUILD_NUMBER} .'
             }
         }
 
