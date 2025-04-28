@@ -10,7 +10,7 @@ pipeline {
 
         stage('Build Docker Image') {
             steps {
-                 docker build -t hiring-app:${BUILD_NUMBER} .'
+                'docker build -t hiring-app:${BUILD_NUMBER} .'
             }
         }
 
