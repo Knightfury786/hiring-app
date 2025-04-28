@@ -1,30 +1,30 @@
 pipeline {
     agent any
 
+        environment {
+        IMAGE_TAG = "${BUILD_NUMBER}"
+    }
+
     stages {
-        stage('Checkout') {
+        
+       
+        stage('Docker Build') {
             steps {
-                git branch: 'main', url: 'https://github.com/Knightfury786/hiring-app.git'
+                sh "docker build . -t hiring-app:$BUILD_NUMBER"
             }
         }
-
-        stage('Build Docker Image') {
-            steps {
-                'docker build . -t hiring-app:${BUILD_NUMBER}'
-            }
-        }
-
-        stage('Push to DockerHub') {
+      stage('Push to DockerHub') {
             environment {
                 DOCKERHUB_CREDENTIALS = credentials('docker')  // 'docker' is the credential ID
             }
             steps {
                 sh """
                     echo \$DOCKERHUB_CREDENTIALS_PSW | docker login -u \$DOCKERHUB_CREDENTIALS_USR --password-stdin
-                    docker tag hiring-app:latest sirajdevops/hiring-app:latest
-                    docker push sirajdevops/hiring-app:latest
+                    docker tag hiring-app:$BUILD_NUMBER sirajdevops/hire-app:$BUILD_NUMBER
+                    docker push sirajdevops/hire-app:$BUILD_NUMBER
                 """
             }
         }
-    }
-}
+       
+        }
+} 
